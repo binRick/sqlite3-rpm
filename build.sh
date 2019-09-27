@@ -26,19 +26,20 @@ mkdir -p ~/rpmbuild/SOURCES
 wget -4 https://www.sqlite.org/2019/sqlite-autoconf-${FILE_RELEASE_VERSION}.tar.gz -O ~/rpmbuild/SOURCES/sqlite-autoconf-${FILE_RELEASE_VERSION}.tar.gz
 cDir=$(pwd)
 cd /tmp
-rm -rf sqlite*
+rm -rf sqlite* opt-sqlite*
 
 tar zxf ~/rpmbuild/SOURCES/sqlite-autoconf-${FILE_RELEASE_VERSION}.tar.gz
 
 ls |grep sqlite
 
 
-mv sqlite-autoconf-$FILE_RELEASE_VERSION sqlite3-$RELEASE_VERSION
+mv sqlite-autoconf-$FILE_RELEASE_VERSION opt-sqlite3-$RELEASE_VERSION
 
 
-tar -czf ~/rpmbuild/SOURCES/sqlite3-${RELEASE_VERSION}.tar.gz sqlite3-$RELEASE_VERSION
+tar -czf ~/rpmbuild/SOURCES/opt-sqlite3-${RELEASE_VERSION}.tar.gz opt-sqlite3-$RELEASE_VERSION
 
-ls -al ~/rpmbuild/SOURCES/sqlite3-${RELEASE_VERSION}.tar.gz
+ls -al ~/rpmbuild/SOURCES/opt-sqlite3-${RELEASE_VERSION}.tar.gz
+tar tzf ~/rpmbuild/SOURCES/opt-sqlite3-${RELEASE_VERSION}.tar.gz
 
 cd $cDir
 rpmbuild -bb .${SPEC_FILE}

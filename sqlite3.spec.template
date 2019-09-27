@@ -1,30 +1,36 @@
-Name:           sqlite3
+Name:           opt-sqlite3
 Version:        __RELEASE_VERSION__
 Release:        1%{?dist}
-Summary:        sqlite3
+Summary:        opt-sqlite3
 
 License:        GPLv2
 URL:            https://www.sqlite.org/
-Source0:        https://www.sqlite.org/2019/sqlite3-__RELEASE_VERSION__.tar.gz
+Source0:        https://www.sqlite.org/2019/opt-sqlite3-__RELEASE_VERSION__.tar.gz
 
 %define _unpackaged_files_terminate_build 0
-
 
 BuildRequires:  zlib-devel
 
 %description
-sqlite3
+opt-sqlite3
 
 %prep
 %setup -q
 
 %build
-%configure --prefix=/opt/sqlite
+./configure --prefix=/opt
 make %{?_smp_mflags}
 
 %install
 rm -rf %{buildroot}
 %make_install
+
 find %{buildroot} -type f | sed 's|^%{buildroot}||' > filelist
+grep '/man/' filelist | sed 's/$/*/g' > filelist2
+grep -v '/man/' filelist >> filelist2
+mv filelist2 filelist
+cat filelist
+
+
 
 %files -f filelist
